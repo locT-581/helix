@@ -1,17 +1,15 @@
 import { defineConfig } from 'vite';
-import dts from 'vite-plugin-dts';
 import { resolve } from 'node:path';
 
+/**
+ * Vite configuration for @helix/ui package
+ * 
+ * Note: TypeScript declaration files (.d.ts) are disabled due to Stitches
+ * type portability limitations. Users can still get type inference from
+ * source files via TypeScript's module resolution.
+ */
 export default defineConfig({
-  plugins: [
-    dts({
-      insertTypesEntry: true,
-      exclude: ['**/*.test.ts', '**/*.test.tsx'],
-      compilerOptions: {
-        skipLibCheck: true,
-      },
-    }),
-  ],
+  plugins: [],
   build: {
     lib: {
       entry: {

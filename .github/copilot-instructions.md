@@ -4,6 +4,112 @@
 
 Helix is a **mobile-first React TypeScript monorepo** for building timeline-based video editing applications. Built with **pnpm workspaces + Turbo + Biome**, it uses **React 19 + Rust/WASM** for high-performance mobile video editing.
 
+
+## ⚠️ NGUYÊN TẮC PHÁT TRIỂN QUAN TRỌNG
+
+### 🔄 **CODE REUSE STRATEGY - TÁI SỬ DỤNG CODE TỐI ĐA**
+
+**QUAN TRỌNG**: Helix KHÔNG phải là dự án viết lại từ đầu. Helix là **bản tối ưu hóa mobile-first** của Twick SDK.
+
+#### **Quy tắc kế thừa code:**
+
+1. **✅ PHẢI TÁI SỬ DỤNG (Copy & Adapt):**
+   - ✅ **Timeline Logic**: Toàn bộ `@twick/timeline` package
+     - Element types (VideoElement, AudioElement, TextElement, ImageElement, etc.)
+     - Track management classes
+     - Visitor pattern implementations (ElementAdder, ElementUpdater, ElementRemover, etc.)
+     - TimelineEditor orchestrator
+     - Undo/redo history management
+   
+   - ✅ **Animation System**: `@twick/timeline` animations
+     - Easing functions (linear, easeIn, easeOut, easeInOut, etc.)
+     - Text effects (Typewriter, Streaming, Elastic, Bounce)
+     - Frame effects (Circle, Rect masking)
+     - Animation utilities
+   
+   - ✅ **Canvas Engine**: `@twick/canvas` core logic
+     - Fabric.js integration patterns (hoặc migrate sang Konva.js)
+     - Element rendering logic
+     - Transform controls
+     - Layer management
+     - Canvas operations (add, update, remove elements)
+   
+   - ✅ **Media Utilities**: `@twick/media-utils`
+     - Video metadata extraction (getVideoDuration, getVideoDimensions)
+     - Audio utilities (getAudioDuration, extractAudio - sẽ migrate sang WASM)
+     - Dimension handlers (fitSize, calculateAspectRatio)
+     - File helpers (URL creation, blob management)
+     - Cache management
+   
+   - ✅ **Live Player**: `@twick/live-player`
+     - Video playback logic
+     - Time synchronization
+     - Playback state management
+     - Volume controls
+     - Seek operations
+
+2. **🔧 CHỈNH SỬA NHẸ (Adapt for Mobile):**
+   - 📱 **UI Components**: Copy logic, rebuild UI với Stitches
+     - Timeline components: Chỉ thay đổi CSS/styling, giữ nguyên logic
+     - Canvas controls: Adapt cho touch events, giữ nguyên core operations
+     - Player controls: Mobile-friendly UI, giữ nguyên player state logic
+   
+   - ⚡ **Performance**: Optimize, không viết lại
+     - Debounce/throttle utilities: Copy từ Twick
+     - Virtual scrolling: Sử dụng pattern từ Twick timeline
+     - Lazy loading: Kế thừa media loading strategy
+
+3. **🆕 MỚI VIẾT (New Mobile Features):**
+   - 👆 Touch gesture handlers (pinch, swipe, long-press)
+   - 📱 Bottom sheet component
+   - 🎨 Stitches design system (thay CSS variables)
+   - 🦀 Rust/WASM modules (audio encoding, timeline collision detection)
+   - 📴 Service Workers cho offline support
+   - 📊 IndexedDB state persistence
+
+4. **❌ KHÔNG BAO GIỜ:**
+   - ❌ Viết lại element types từ đầu (copy từ Twick)
+   - ❌ Viết lại Visitor pattern (copy từ Twick)
+   - ❌ Viết lại animation system (copy từ Twick)
+   - ❌ Viết lại player logic (adapt từ Twick)
+   - ❌ Viết lại utilities có sẵn (copy từ Twick)
+
+#### **Migration Workflow:**
+
+```
+Bước 1: COPY từ Twick
+├─ Sao chép file/folder nguyên gốc từ packages/twick/*
+├─ Giữ nguyên business logic
+└─ Giữ nguyên class/function signatures
+
+Bước 2: RENAME Package
+├─ Đổi @twick/* → @helix/*
+├─ Update import paths
+└─ Update package.json
+
+Bước 3: ADAPT cho Mobile (nếu cần)
+├─ UI: Thay CSS → Stitches styled components
+├─ Events: Thêm touch event handlers
+├─ Breakpoints: Thêm responsive logic
+└─ Dependencies: Upgrade libraries (React 19, etc.)
+
+Bước 4: ENHANCE với WASM (optional)
+├─ Audio: lamejs → WASM encoder
+├─ Timeline: Collision detection → Rust interval tree
+└─ Video: Metadata extraction → WASM processor
+```
+
+#### **Code Reuse Checklist:**
+
+Trước khi viết code mới, tự hỏi:
+- [ ] ✅ Twick đã có feature này chưa?
+- [ ] ✅ Có thể copy code từ Twick không?
+- [ ] ✅ Chỉ cần adapt UI/styling hay phải viết lại logic?
+- [ ] ✅ Nếu phải viết lại, lý do là gì?
+
+**MỤC TIÊU**: Tái sử dụng ≥ 70% code từ Twick, chỉ viết mới 30% (mobile UI + WASM + PWA).
+
+
 **Key Packages:**
 - `@helix/core` - Zero-dependency foundation (types, constants, utilities)
 - Future packages: `@helix/timeline`, `@helix/canvas`, `@helix/player`, `@helix/studio`

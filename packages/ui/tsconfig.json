@@ -5,8 +5,8 @@
     "composite": false,
     "jsx": "react-jsx",
     "skipLibCheck": true,
-    // Suppress Stitches type inference warnings (known limitation)
-    "declaration": true,
+    // Disable declaration to avoid Stitches type portability warnings
+    "declaration": false,
     "declarationMap": false
   },
   "include": ["src/**/*"],
