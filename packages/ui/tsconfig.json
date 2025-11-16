@@ -4,7 +4,10 @@
     "outDir": "./dist",
     "composite": false,
     "jsx": "react-jsx",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    // Suppress Stitches type inference warnings (known limitation)
+    "declaration": true,
+    "declarationMap": false
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.test.tsx"]

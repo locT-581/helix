@@ -267,10 +267,23 @@ export const Select = ({
   size = 'md',
   css: customCss,
   children,
-  ...props
+  disabled,
+  required,
+  defaultValue,
+  value,
+  onValueChange,
 }: SelectProps) => {
+  // Build props conditionally for exactOptionalPropertyTypes
+  const rootProps = {
+    ...(disabled !== undefined && { disabled }),
+    ...(required !== undefined && { required }),
+    ...(defaultValue !== undefined && { defaultValue }),
+    ...(value !== undefined && { value }),
+    ...(onValueChange !== undefined && { onValueChange }),
+  };
+
   const selectElement = (
-    <SelectPrimitive.Root {...props}>
+    <SelectPrimitive.Root {...rootProps}>
       <StyledTrigger size={size} css={customCss as object | undefined}>
         <SelectPrimitive.Value placeholder={placeholder} />
         <StyledIcon>

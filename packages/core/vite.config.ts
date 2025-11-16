@@ -1,9 +1,10 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 import { resolve } from 'path';
 import dts from 'vite-plugin-dts';
 
 export default defineConfig({
   plugins: [
+    // @ts-expect-error - vite-plugin-dts uses Vite 5 types, but we're on Vite 6
     dts({
       insertTypesEntry: true,
       include: ['src/**/*'],

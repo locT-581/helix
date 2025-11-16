@@ -222,7 +222,7 @@ export const Switch = ({
 
   if (label) {
     return (
-      <SwitchWrapper fullWidth={fullWidth || undefined}>
+      <SwitchWrapper fullWidth={fullWidth === true ? true : undefined}>
         <SwitchLabel htmlFor={switchId}>
           <div>
             {label}
