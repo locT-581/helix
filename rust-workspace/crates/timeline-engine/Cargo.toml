@@ -1,0 +1,28 @@
+[package]
+name = "timeline-engine"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+wasm-bindgen.workspace = true
+wasm-bindgen-futures.workspace = true
+js-sys.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+anyhow.workspace = true
+
+# Interval tree for collision detection
+rust_decimal = "1.33" # High-precision time calculations
+
+[dependencies.web-sys]
+workspace = true
+features = ["console"]
+
+[dev-dependencies]
+wasm-bindgen-test = "0.3"

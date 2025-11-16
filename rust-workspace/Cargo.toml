@@ -1,8 +1,8 @@
 [workspace]
 members = [
     "crates/audio-processor",
-    "crates/video-processor", 
     "crates/timeline-engine",
+    "crates/video-processor",
 ]
 resolver = "2"
 
