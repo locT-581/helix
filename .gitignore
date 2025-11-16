@@ -1,0 +1,56 @@
+# Helix - Git Ignore
+
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build outputs
+dist/
+build/
+.next/
+out/
+pkg/
+
+# Testing
+coverage/
+.nyc_output
+
+# Environment files
+.env
+.env*.local
+
+# Cache & temp files
+.turbo/
+.cache/
+.temp/
+*.log
+*.tsbuildinfo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Rust
+target/
+Cargo.lock
+**/*.rs.bk
+
+# WASM build artifacts
+*.wasm
+
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Local development
+.local/

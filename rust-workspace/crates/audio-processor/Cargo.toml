@@ -1,0 +1,33 @@
+[package]
+name = "audio-processor"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+wasm-bindgen.workspace = true
+wasm-bindgen-futures.workspace = true
+js-sys.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+mp3lame-encoder.workspace = true
+rubato.workspace = true
+symphonia.workspace = true
+thiserror.workspace = true
+anyhow.workspace = true
+bytemuck.workspace = true
+
+[dependencies.web-sys]
+workspace = true
+features = [
+    "console",
+    "AudioContext",
+    "AudioBuffer",
+]
+
+[dev-dependencies]
+wasm-bindgen-test = "0.3"

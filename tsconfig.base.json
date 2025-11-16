@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    // Type Checking
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "exactOptionalPropertyTypes": true,
+
+    // Modules
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "resolveJsonModule": true,
+    "allowImportingTsExtensions": false,
+    "moduleDetection": "force",
+
+    // Emit
+    "noEmit": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+
+    // JavaScript Support
+    "allowJs": false,
+    "checkJs": false,
+
+    // Interop Constraints
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "forceConsistentCasingInFileNames": true,
+
+    // Language and Environment
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "jsx": "react-jsx",
+    "useDefineForClassFields": true,
+
+    // Skip Lib Check for faster builds
+    "skipLibCheck": true,
+
+    // Paths (can be overridden in package tsconfig)
+    "baseUrl": ".",
+    "paths": {
+      "@helix/core": ["./packages/core/src"],
+      "@helix/ui": ["./packages/ui/src"],
+      "@helix/timeline": ["./packages/timeline/src"],
+      "@helix/canvas": ["./packages/canvas/src"],
+      "@helix/audio": ["./packages/audio/src"]
+    }
+  },
+  "exclude": ["node_modules", "dist", "build", ".turbo", "coverage"]
+}
