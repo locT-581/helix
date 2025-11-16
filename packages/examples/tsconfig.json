@@ -1,0 +1,18 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@helix/core": ["../core/src"],
+      "@helix/ui": ["../ui/src"],
+      "@helix/studio": ["../studio/src"]
+    }
+  },
+  "include": ["src/**/*"],
+  "references": [
+    { "path": "../core" },
+    { "path": "../ui" },
+    { "path": "../studio" }
+  ]
+}

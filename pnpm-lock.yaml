@@ -100,6 +100,40 @@ importers:
         specifier: ^2.1.4
         version: 2.1.9(@types/node@20.19.25)(jsdom@25.0.1)
 
+  packages/examples:
+    dependencies:
+      '@helix/core':
+        specifier: workspace:*
+        version: link:../core
+      '@helix/studio':
+        specifier: workspace:*
+        version: link:../studio
+      '@helix/ui':
+        specifier: workspace:*
+        version: link:../ui
+      react:
+        specifier: ^19.0.0
+        version: 19.2.0
+      react-dom:
+        specifier: ^19.0.0
+        version: 19.2.0(react@19.2.0)
+    devDependencies:
+      '@types/react':
+        specifier: ^19.2.5
+        version: 19.2.5
+      '@types/react-dom':
+        specifier: ^19.2.2
+        version: 19.2.3(@types/react@19.2.5)
+      '@vitejs/plugin-react':
+        specifier: ^4.3.4
+        version: 4.7.0(vite@6.4.1(@types/node@20.19.25)(yaml@2.8.1))
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      vite:
+        specifier: ^6.4.1
+        version: 6.4.1(@types/node@20.19.25)(yaml@2.8.1)
+
   packages/studio:
     dependencies:
       '@helix/core':

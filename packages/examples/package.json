@@ -1,0 +1,27 @@
+{
+  "name": "@helix/examples",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Example application demonstrating Helix mobile video editor",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@helix/core": "workspace:*",
+    "@helix/ui": "workspace:*",
+    "@helix/studio": "workspace:*",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.5",
+    "@types/react-dom": "^19.2.2",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "^5.9.3",
+    "vite": "^6.4.1"
+  }
+}
