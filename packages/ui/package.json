@@ -1,0 +1,64 @@
+{
+  "name": "@helix/ui",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Mobile-first React component library for Helix video editor",
+  "keywords": [
+    "helix",
+    "react",
+    "components",
+    "ui",
+    "stitches",
+    "radix-ui",
+    "mobile-first"
+  ],
+  "author": "Loc Tran",
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./stitches.config": {
+      "import": "./dist/stitches.config.js",
+      "types": "./dist/stitches.config.d.ts"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "vite build --watch",
+    "build": "vite build",
+    "test": "vitest",
+    "test:watch": "vitest --watch",
+    "test:coverage": "vitest --coverage"
+  },
+  "dependencies": {
+    "@helix/core": "workspace:*",
+    "@stitches/react": "^1.2.8",
+    "@radix-ui/react-dialog": "^1.1.15",
+    "@radix-ui/react-select": "^2.2.6",
+    "@radix-ui/react-slider": "^1.3.6",
+    "@radix-ui/react-switch": "^1.2.6",
+    "@radix-ui/react-tooltip": "^1.2.8",
+    "lucide-react": "^0.553.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "typescript": "^5.9.3",
+    "vite": "^6.4.1",
+    "vite-plugin-dts": "^4.5.4",
+    "vitest": "^2.1.9"
+  },
+  "peerDependencies": {
+    "react": ">=19.0.0",
+    "react-dom": ">=19.0.0"
+  }
+}
