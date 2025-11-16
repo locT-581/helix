@@ -9,10 +9,5 @@
       "@helix/studio": ["../studio/src"]
     }
   },
-  "include": ["src/**/*"],
-  "references": [
-    { "path": "../core" },
-    { "path": "../ui" },
-    { "path": "../studio" }
-  ]
+  "include": ["src/**/*"]
 }

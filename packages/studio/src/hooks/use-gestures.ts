@@ -168,17 +168,21 @@ export const usePinchZoom = (
  * ```
  */
 export const useDragElement = (config?: UserDragConfig) => {
+  const dragConfig: UserDragConfig = {
+    from: [0, 0],
+    rubberband: true,
+  };
+  
+  if (config?.bounds) {
+    dragConfig.bounds = config.bounds;
+  }
+  
   const bind = useDrag(
     ({ offset: [x, y] }) => {
       // Return position for consumer to handle
       return { x, y };
     },
-    {
-      from: () => [0, 0],
-      bounds: config?.bounds,
-      rubberband: true,
-      ...config,
-    }
+    dragConfig
   );
   
   return { bind };

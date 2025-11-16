@@ -1,4 +1,5 @@
-import { ReactNode, useEffect } from 'react';
+import { useEffect } from 'react';
+import type { ReactNode } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { useDrag } from '@use-gesture/react';
 import { styled } from '@helix/ui';
@@ -58,6 +59,7 @@ const Backdrop = styled(motion.div, {
   touchAction: 'none',
 });
 
+// Omit HTML drag events to avoid conflict with framer-motion drag
 const SheetContainer = styled(motion.div, {
   position: 'fixed',
   bottom: 0,
@@ -140,7 +142,7 @@ export const BottomSheet = ({
       });
     },
     {
-      from: () => [0, controls],
+      from: [0, 0],
       bounds: { top: -window.innerHeight, bottom: 0 },
       rubberband: true,
     }
@@ -178,10 +180,10 @@ export const BottomSheet = ({
         initial={{ y: window.innerHeight }}
         animate={controls}
         style={{ height: `${(snapPoints[currentSnapIndex] ?? 0.5) * 100}vh` }}
-        {...bind()}
+        {...(bind() as any)}
       >
         {showDragHandle && <DragHandle />}
-        <SheetContent>{children}</SheetContent>
+        <SheetContent>{children as any}</SheetContent>
       </SheetContainer>
     </>
   );

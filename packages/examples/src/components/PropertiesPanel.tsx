@@ -55,7 +55,11 @@ export const PropertiesPanel = () => {
           </SliderLabel>
           <Slider
             value={[volume * 100]}
-            onValueChange={([v]) => setVolume(v / 100)}
+            onValueChange={([v]) => {
+              if (v !== undefined) {
+                setVolume(v / 100);
+              }
+            }}
             min={0}
             max={100}
             step={1}
@@ -72,7 +76,11 @@ export const PropertiesPanel = () => {
           </SliderLabel>
           <Slider
             value={[zoom * 100]}
-            onValueChange={([v]) => setZoom(v / 100)}
+            onValueChange={([v]) => {
+              if (v !== undefined) {
+                setZoom(v / 100);
+              }
+            }}
             min={50}
             max={200}
             step={10}

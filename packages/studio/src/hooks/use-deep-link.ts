@@ -196,9 +196,15 @@ export const useSyncUrlWithState = () => {
   useEffect(() => {
     const params: DeepLinkParams = {
       tab: currentTab,
-      time: currentTime > 0 ? currentTime : undefined,
-      element: selectedElementIds[0],
     };
+    
+    if (currentTime > 0) {
+      params.time = currentTime;
+    }
+    
+    if (selectedElementIds[0]) {
+      params.element = selectedElementIds[0];
+    }
     
     const url = generateDeepLink(params);
     
@@ -224,16 +230,22 @@ export const shareEditorState = (params: DeepLinkParams): string => {
   
   // Copy to clipboard if Web Share API not available
   if ('share' in navigator) {
-    navigator.share({
+    (navigator as Navigator & { share?: (data: ShareData) => Promise<void> }).share?.({
       title: 'Helix Editor',
       text: 'Check out my video project',
       url: fullUrl,
     }).catch(() => {
-      // Fallback: copy to clipboard
-      navigator.clipboard.writeText(fullUrl);
+      // Fallback: copy to clipboard if supported
+      if ('clipboard' in navigator) {
+        (navigator as Navigator & { clipboard?: { writeText: (text: string) => Promise<void> } }).clipboard?.writeText(fullUrl).catch(() => {
+          console.warn('Failed to copy to clipboard');
+        });
+      }
     });
-  } else {
-    navigator.clipboard.writeText(fullUrl);
+  } else if ('clipboard' in navigator) {
+    (navigator as Navigator & { clipboard?: { writeText: (text: string) => Promise<void> } }).clipboard?.writeText(fullUrl).catch(() => {
+      console.warn('Failed to copy to clipboard');
+    });
   }
   
   return fullUrl;

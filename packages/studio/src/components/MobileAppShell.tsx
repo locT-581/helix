@@ -103,13 +103,19 @@ export const MobileAppShell = ({
   children,
   useSafeArea = true,
 }: MobileAppShellProps) => {
+  // Type assertion to suppress React 18/19 ReactNode bigint incompatibility with Stitches
+  const Container = AppContainer as any;
+  const Header = TopBar as any;
+  const Main = MainContent as any;
+  const Nav = BottomNavContainer as any;
+  
   return (
-    <AppContainer useSafeArea={useSafeArea}>
-      {topBar && <TopBar>{topBar}</TopBar>}
+    <Container useSafeArea={useSafeArea}>
+      {topBar && <Header>{topBar}</Header>}
       
-      <MainContent>{children}</MainContent>
+      <Main>{children}</Main>
       
-      {bottomNav && <BottomNavContainer>{bottomNav}</BottomNavContainer>}
-    </AppContainer>
+      {bottomNav && <Nav>{bottomNav}</Nav>}
+    </Container>
   );
 };

@@ -1,6 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
 import { styled } from '@helix/ui';
-import { useTap, useDoubleTap, usePinchZoom } from '../hooks/use-gestures';
 import { clamp } from '@helix/core';
 
 /**
@@ -144,9 +143,9 @@ export const VideoPreview = ({
 }: VideoPreviewProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [fitMode, setFitMode] = useState<'contain' | 'cover'>('contain');
   const [showOverlay, setShowOverlay] = useState(false);
-  const [zoom, setZoom] = useState(1);
+  const fitMode = 'contain' as const; // Default fit mode
+  const zoom = 1; // Default zoom level
   
   // Sync currentTime prop with video element
   useEffect(() => {
@@ -189,17 +188,9 @@ export const VideoPreview = ({
   };
   
   // Tap to play/pause
-  const tapBind = useTap(togglePlayPause);
-  
-  // Double tap to toggle fit mode
-  const doubleTapBind = useDoubleTap(() => {
-    setFitMode((prev) => (prev === 'contain' ? 'cover' : 'contain'));
-  });
-  
-  // Pinch to zoom
-  const pinchBind = usePinchZoom((scale) => {
-    setZoom(clamp(scale, 0.5, 3));
-  });
+  const handleClick = () => {
+    togglePlayPause();
+  };
   
   // Handle time update
   const handleTimeUpdate = () => {
@@ -215,7 +206,7 @@ export const VideoPreview = ({
   };
   
   return (
-    <VideoContainer {...tapBind()} {...doubleTapBind()} {...pinchBind()}>
+    <VideoContainer onClick={handleClick}>
       <Video
         ref={videoRef}
         src={src}

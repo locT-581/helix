@@ -129,50 +129,50 @@ export const useSwipeWithHaptic = (config: {
   onSwipeRight?: () => void;
   onSwipeUp?: () => void;
   onSwipeDown?: () => void;
-  threshold?: number | undefined;
+  threshold?: number;
   haptic?: readonly number[];
 }) => {
   const hapticPattern = config.haptic ?? HapticPattern.Medium;
   
-  const wrappedConfig: {
-    onSwipeLeft?: () => void | undefined;
-    onSwipeRight?: () => void | undefined;
-    onSwipeUp?: () => void | undefined;
-    onSwipeDown?: () => void | undefined;
-    threshold?: number | undefined;
+  const wrappedCallbacks: {
+    onSwipeLeft?: () => void;
+    onSwipeRight?: () => void;
+    onSwipeUp?: () => void;
+    onSwipeDown?: () => void;
+    threshold?: number;
   } = {};
   
-  if (config.threshold !== undefined) {
-    wrappedConfig.threshold = config.threshold;
-  }
-  
   if (config.onSwipeLeft) {
-    wrappedConfig.onSwipeLeft = () => {
+    wrappedCallbacks.onSwipeLeft = () => {
       triggerHaptic(hapticPattern);
       config.onSwipeLeft!();
     };
   }
   
   if (config.onSwipeRight) {
-    wrappedConfig.onSwipeRight = () => {
+    wrappedCallbacks.onSwipeRight = () => {
       triggerHaptic(hapticPattern);
       config.onSwipeRight!();
     };
   }
   
   if (config.onSwipeUp) {
-    wrappedConfig.onSwipeUp = () => {
+    wrappedCallbacks.onSwipeUp = () => {
       triggerHaptic(hapticPattern);
       config.onSwipeUp!();
     };
   }
   
   if (config.onSwipeDown) {
-    wrappedConfig.onSwipeDown = () => {
+    wrappedCallbacks.onSwipeDown = () => {
       triggerHaptic(hapticPattern);
       config.onSwipeDown!();
     };
   }
   
-  return useBaseSwipe(wrappedConfig);
+  if (config.threshold !== undefined) {
+    wrappedCallbacks.threshold = config.threshold;
+  }
+  
+  return useBaseSwipe(wrappedCallbacks);
 };
