@@ -180,6 +180,34 @@ importers:
         specifier: ^6.4.1
         version: 6.4.1(@types/node@20.19.25)(yaml@2.8.1)
 
+  packages/timeline:
+    dependencies:
+      '@helix/core':
+        specifier: workspace:*
+        version: link:../core
+      react:
+        specifier: ^19.0.0
+        version: 19.2.0
+    devDependencies:
+      '@types/node':
+        specifier: ^20.17.6
+        version: 20.19.25
+      '@types/react':
+        specifier: ^19.2.5
+        version: 19.2.5
+      typescript:
+        specifier: ^5.6.3
+        version: 5.9.3
+      vite:
+        specifier: ^6.0.1
+        version: 6.4.1(@types/node@20.19.25)(yaml@2.8.1)
+      vite-plugin-dts:
+        specifier: ^4.3.0
+        version: 4.5.4(@types/node@20.19.25)(rollup@4.53.2)(typescript@5.9.3)(vite@6.4.1(@types/node@20.19.25)(yaml@2.8.1))
+      vitest:
+        specifier: ^2.1.4
+        version: 2.1.9(@types/node@20.19.25)(jsdom@25.0.1)
+
   packages/ui:
     dependencies:
       '@helix/core':
