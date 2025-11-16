@@ -18,6 +18,7 @@
   "dependencies": {
     "@helix/core": "workspace:*",
     "@helix/ui": "workspace:*",
+    "@helix/timeline": "workspace:*",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "framer-motion": "^11.15.0",

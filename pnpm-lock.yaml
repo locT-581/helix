@@ -142,6 +142,9 @@ importers:
       '@helix/core':
         specifier: workspace:*
         version: link:../core
+      '@helix/timeline':
+        specifier: workspace:*
+        version: link:../timeline
       '@helix/ui':
         specifier: workspace:*
         version: link:../ui

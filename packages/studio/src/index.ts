@@ -8,6 +8,22 @@ export type { BottomSheetProps } from './components/BottomSheet';
 export { VideoPreview } from './components/VideoPreview';
 export type { VideoPreviewProps } from './components/VideoPreview';
 
+// Timeline Components
+export {
+  TimelineContainer,
+  TimelineRuler,
+  Playhead,
+  TimelineTrack,
+  TimelineElement,
+} from './components/timeline';
+export type {
+  TimelineContainerProps,
+  TimelineRulerProps,
+  PlayheadLineProps,
+  TimelineTrackProps,
+  TimelineElementProps,
+} from './components/timeline';
+
 // Hooks - Gestures
 export {
   useTap,
