@@ -9,6 +9,9 @@ import {
   debounce,
   throttle,
   fitSize,
+  calculateAspectRatio,
+  isDefined,
+  deepClone,
   detectDeviceCapabilities,
 } from './index';
 
@@ -153,6 +156,14 @@ describe('Function Utils', () => {
 });
 
 describe('Size Utils', () => {
+  describe('calculateAspectRatio', () => {
+    it('should calculate aspect ratio correctly', () => {
+      expect(calculateAspectRatio({ width: 1920, height: 1080 })).toBeCloseTo(16 / 9);
+      expect(calculateAspectRatio({ width: 720, height: 1280 })).toBeCloseTo(9 / 16);
+      expect(calculateAspectRatio({ width: 1080, height: 1080 })).toBe(1);
+    });
+  });
+
   describe('fitSize', () => {
     it('should fit size within bounds maintaining aspect ratio', () => {
       const result = fitSize({ width: 1920, height: 1080 }, { width: 640, height: 640 });
@@ -176,6 +187,43 @@ describe('Size Utils', () => {
       const result = fitSize({ width: 1000, height: 1000 }, { width: 500, height: 500 });
       expect(result.width).toBe(500);
       expect(result.height).toBe(500);
+    });
+  });
+});
+
+describe('Utility Functions', () => {
+  describe('isDefined', () => {
+    it('should return true for defined values', () => {
+      expect(isDefined(0)).toBe(true);
+      expect(isDefined('')).toBe(true);
+      expect(isDefined(false)).toBe(true);
+      expect(isDefined([])).toBe(true);
+      expect(isDefined({})).toBe(true);
+    });
+
+    it('should return false for null and undefined', () => {
+      expect(isDefined(null)).toBe(false);
+      expect(isDefined(undefined)).toBe(false);
+    });
+  });
+
+  describe('deepClone', () => {
+    it('should deep clone objects', () => {
+      const obj = { a: 1, b: { c: 2 } };
+      const cloned = deepClone(obj);
+      
+      expect(cloned).toEqual(obj);
+      expect(cloned).not.toBe(obj);
+      expect(cloned.b).not.toBe(obj.b);
+    });
+
+    it('should clone arrays', () => {
+      const arr = [1, 2, { a: 3 }];
+      const cloned = deepClone(arr);
+      
+      expect(cloned).toEqual(arr);
+      expect(cloned).not.toBe(arr);
+      expect(cloned[2]).not.toBe(arr[2]);
     });
   });
 });
