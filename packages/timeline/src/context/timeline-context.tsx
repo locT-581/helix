@@ -13,8 +13,6 @@ import { TrackElement } from "../core/elements/base.element";
 import { ProjectJSON, Size, TrackJSON } from "../types";
 import { TimelineEditor } from "../core/editor/timeline.editor";
 import { editorRegistry } from "../utils/register-editor";
-import { PostHogProvider } from "posthog-js/react";
-import posthog from "posthog-js";
 
 /**
  * Type definition for the Timeline context.
@@ -170,11 +168,8 @@ const TimelineProviderInner = ({
   const editor = useMemo(() => {
     if (editorRegistry.has(contextId)) {
       editorRegistry.delete(contextId);
-    } else {
-      posthog.capture("timeline_editor_created", {
-        contextId,
-      });
     }
+    // Mobile SDK: No analytics tracking needed
     const newEditor = new TimelineEditor({
       contextId,
       setTotalDuration,
@@ -265,9 +260,11 @@ const TimelineProviderInner = ({
 
 /**
  * Provider component for the Timeline context.
- * Wraps the timeline functionality with PostHog analytics and undo/redo support.
+ * Wraps the timeline functionality with undo/redo support.
  * Manages the global state for timeline instances including tracks, elements,
  * playback state, and history management.
+ * 
+ * NOTE: Mobile SDK version - PostHog analytics removed for lightweight mobile usage.
  *
  * @param props - Timeline provider configuration
  * @returns Context provider with timeline state management
@@ -291,31 +288,22 @@ export const TimelineProvider = ({
   undoRedoPersistenceKey,
   maxHistorySize,
 }: TimelineProviderProps) => {
-  // If undo/redo is enabled, wrap with UndoRedoProvider
+  // Mobile SDK: No analytics provider needed
   return (
-    <PostHogProvider
-      apiKey="phc_XaPky8YDbZjqm4GkCWBsVmICZTOTgjascrsftSOoJUJ"
-      options={{
-        api_host: "https://us.i.posthog.com",
-        defaults: "2025-05-24",
-        disable_session_recording: true,
-      }}
+    <UndoRedoProvider
+      persistenceKey={undoRedoPersistenceKey}
+      maxHistorySize={maxHistorySize}
     >
-      <UndoRedoProvider
-        persistenceKey={undoRedoPersistenceKey}
+      <TimelineProviderInner
+        resolution={resolution}
+        initialData={initialData}
+        contextId={contextId}
+        undoRedoPersistenceKey={undoRedoPersistenceKey}
         maxHistorySize={maxHistorySize}
       >
-        <TimelineProviderInner
-          resolution={resolution}
-          initialData={initialData}
-          contextId={contextId}
-          undoRedoPersistenceKey={undoRedoPersistenceKey}
-          maxHistorySize={maxHistorySize}
-        >
-          {children}
-        </TimelineProviderInner>
-      </UndoRedoProvider>
-    </PostHogProvider>
+        {children}
+      </TimelineProviderInner>
+    </UndoRedoProvider>
   );
 };
 

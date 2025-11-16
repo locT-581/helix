@@ -123,3 +123,10 @@ export const getImageMeta = async (src: string): Promise<Size> => {
     };
   });
 };
+
+/**
+ * Get image dimensions (alias for getImageMeta)
+ * @param src - Image source URL
+ * @returns Promise with image dimensions
+ */
+export const getImageDimensions = getImageMeta;

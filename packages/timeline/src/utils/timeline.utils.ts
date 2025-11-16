@@ -97,6 +97,7 @@ export const getCurrentElements = (
         for (let j = 0; j < elements.length; j++) {
           const element = elements[j];
           if (
+            element &&
             element.getStart() <= currentTime &&
             element.getEnd() >= currentTime
           ) {
