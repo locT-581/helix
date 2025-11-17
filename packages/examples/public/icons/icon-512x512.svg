@@ -1,0 +1,24 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="256" cy="256" r="256" fill="#7C3AED"/>
+  
+  <!-- Video camera icon -->
+  <g transform="translate(128, 148)">
+    <!-- Camera body -->
+    <rect x="0" y="32" width="176" height="128" rx="16" fill="white"/>
+    
+    <!-- Lens -->
+    <circle cx="88" cy="96" r="48" fill="#7C3AED"/>
+    <circle cx="88" cy="96" r="32" fill="#6D28D9"/>
+    
+    <!-- Record button -->
+    <circle cx="88" cy="96" r="16" fill="white"/>
+    
+    <!-- Viewfinder -->
+    <rect x="192" y="48" width="64" height="96" rx="8" fill="white"/>
+    <path d="M 176 96 L 192 72 L 192 120 Z" fill="white"/>
+  </g>
+  
+  <!-- Letter H -->
+  <text x="256" y="360" font-family="Arial, sans-serif" font-size="120" font-weight="bold" fill="white" text-anchor="middle">H</text>
+</svg>

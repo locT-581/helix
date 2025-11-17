@@ -26,7 +26,7 @@
   },
   "files": ["dist", "README.md"],
   "scripts": {
-    "build": "vite build",
+    "build": "vite build && tsc --emitDeclarationOnly --outDir dist --declarationDir dist || true",
     "dev": "vite build --watch",
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf dist .turbo",

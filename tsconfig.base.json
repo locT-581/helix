@@ -49,9 +49,11 @@
     "paths": {
       "@helix/core": ["./packages/core/src"],
       "@helix/ui": ["./packages/ui/src"],
+      "@helix/media": ["./packages/media/src"],
+      "@helix/audio": ["./packages/audio/src"],
       "@helix/timeline": ["./packages/timeline/src"],
       "@helix/canvas": ["./packages/canvas/src"],
-      "@helix/audio": ["./packages/audio/src"]
+      "@helix/studio": ["./packages/studio/src"]
     }
   },
   "exclude": ["node_modules", "dist", "build", ".turbo", "coverage"]

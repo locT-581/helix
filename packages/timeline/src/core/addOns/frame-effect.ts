@@ -38,15 +38,16 @@ export class ElementFrameEffect {
 
   toJSON(): FrameEffect {
     return {
+      type: this.props.type,
       s: this.s,
       e: this.e,
       props: this.props,
-    };
+    } as FrameEffect;
   }
   
   static fromJSON(json: FrameEffect) {
-    const effect = new ElementFrameEffect(json.s, json.e);
-    effect.setProps(json.props);
+    const effect = new ElementFrameEffect(json.s || 0, json.e || 0);
+    if (json.props) effect.setProps({ type: json.type, ...json.props } as FrameEffectProps);
     return effect;
   }
 }

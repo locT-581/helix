@@ -13,7 +13,6 @@
 import { styled } from '@helix/ui';
 import { useGesture } from '@use-gesture/react';
 import { useRef, useState, type ReactNode } from 'react';
-import { TOUCH_TARGET } from '@helix/core';
 
 /**
  * Props for TimelineContainer component
@@ -64,10 +63,10 @@ const ScrollableContent = styled('div', {
   overflow: 'auto',
   willChange: 'transform',
   
-  // Custom scrollbar (mobile-friendly)
+  // Custom scrollbar (subtle, mobile-friendly)
   '&::-webkit-scrollbar': {
-    height: TOUCH_TARGET.MIN,
-    width: TOUCH_TARGET.MIN,
+    height: '8px',
+    width: '8px',
   },
   '&::-webkit-scrollbar-track': {
     backgroundColor: '$neutral700',
@@ -78,6 +77,9 @@ const ScrollableContent = styled('div', {
     
     '&:hover': {
       backgroundColor: '$neutral400',
+    },
+    '&:active': {
+      backgroundColor: '$neutral300',
     },
   },
 });

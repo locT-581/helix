@@ -1,4 +1,4 @@
-import { ElementVisitor } from "./element-visitor";
+import type { ElementVisitor } from "./element-visitor";
 import { VideoElement } from "../elements/video.element";
 import { AudioElement } from "../elements/audio.element";
 import { ImageElement } from "../elements/image.element";

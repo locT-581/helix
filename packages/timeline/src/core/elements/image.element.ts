@@ -23,6 +23,8 @@ export class ImageElement extends TrackElement {
       mediaFilter: "none",
     };
     this.frame = {
+      width: 0,
+      height: 0,
       x: 0,
       y: 0
     }
@@ -59,9 +61,9 @@ export class ImageElement extends TrackElement {
     const meta = await getImageDimensions(this.props.src);
     if (updateFrame) {
       const baseSize = getObjectFitSize(
-        "contain",
         { width: meta.width, height: meta.height },
-        this.parentSize
+        this.parentSize,
+        "contain"
       );
       this.frame = {
         size: [baseSize.width, baseSize.height],

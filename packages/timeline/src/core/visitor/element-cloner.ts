@@ -58,7 +58,7 @@ export class ElementCloner implements ElementVisitor<TrackElement> {
   }
 
   visitTextElement(element: TextElement): TrackElement {
-    const clonedElement = new TextElement(element.getProps()!.text);
+    const clonedElement = new TextElement(element.getProps()?.text || '');
     this.cloneElementProperties(element, clonedElement);
     clonedElement.setTextEffect(element.getTextEffect());
     return clonedElement;

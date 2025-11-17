@@ -29,7 +29,7 @@ import { TIMELINE_ELEMENT_TYPE } from "./utils/constants";
 import { TimelineEditor } from "./core/editor/timeline.editor";
 import {
   TimelineProvider,
-  TimelineProviderProps,
+  type TimelineProviderProps,
 } from "./context/timeline-context";
 import { Track } from "./core/track/track";
 import { ElementDeserializer } from "./core/visitor/element-deserializer";
@@ -91,7 +91,12 @@ export { TIMELINE_ELEMENT_TYPE };
 export * from "./types";
 export * from "./utils/constants";
 export * from "./utils/timeline.utils";
+export * from "./utils/easing";
+export { applyEasing } from "./utils/easing";
 export * from "./context/timeline-context";
+
+// Mobile UI Components (Week 11)
+export * from "./components";
 
 // Core components
 export * from "./core/track/track";
@@ -105,6 +110,9 @@ export * from "./core/visitor/element-remover";
 export * from "./core/visitor/element-updater";
 export * from "./core/visitor/element-splitter";
 export * from "./core/visitor/element-cloner";
+
+// Mobile UI Components
+export * from "./components";
 
 // Expose classes globally on window object for browser access
 if (typeof window !== "undefined") {

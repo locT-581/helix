@@ -8,6 +8,10 @@ export type { BottomSheetProps } from './components/BottomSheet';
 export { VideoPreview } from './components/VideoPreview';
 export type { VideoPreviewProps } from './components/VideoPreview';
 
+// Export Components
+export { ExportBottomSheet } from './components/export';
+export type { ExportBottomSheetProps } from './components/export';
+
 // Timeline Components
 export {
   TimelineContainer,
@@ -15,6 +19,7 @@ export {
   Playhead,
   TimelineTrack,
   TimelineElement,
+  ZoomControls,
 } from './components/timeline';
 export type {
   TimelineContainerProps,
@@ -22,6 +27,7 @@ export type {
   PlayheadLineProps,
   TimelineTrackProps,
   TimelineElementProps,
+  ZoomControlsProps,
 } from './components/timeline';
 
 // Hooks - Gestures
@@ -35,6 +41,10 @@ export {
   useCombinedGestures,
 } from './hooks/use-gestures';
 
+// Hooks - Export
+export { useExportManager } from './hooks/use-export-manager';
+export type { UseExportManagerOptions, UseExportManagerReturn } from './hooks/use-export-manager';
+
 // Hooks - Haptic Feedback
 export {
   isHapticSupported,
@@ -45,6 +55,30 @@ export {
   useTapWithHaptic,
   useSwipeWithHaptic,
 } from './hooks/use-haptic';
+
+// Export Services
+export {
+  VideoRenderer,
+  AudioMixer,
+  ExportEngine,
+  MP4Muxer,
+  WebMMuxer,
+  createMuxer,
+  isWebCodecsAvailable,
+  getSupportedVideoCodecs,
+  getSupportedAudioCodecs,
+} from './services';
+export type {
+  FrameData,
+  AudioSegment,
+  MuxerConfig,
+  TimelineData,
+  VideoTrack,
+  VideoElement,
+  AudioTrack,
+  AudioElement,
+  TextOverlay,
+} from './services';
 
 // Hooks - Deep Linking
 export {

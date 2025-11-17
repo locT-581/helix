@@ -5,6 +5,9 @@
  * Lightweight, zero dependencies.
  */
 
+// Export export constants
+export * from './export';
+
 /**
  * Element type constants (aligned with ElementType)
  */

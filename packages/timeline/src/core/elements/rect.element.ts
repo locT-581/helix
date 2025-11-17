@@ -6,7 +6,7 @@ import { TIMELINE_ELEMENT_TYPE } from "../../utils/constants";
 export class RectElement extends TrackElement {
   protected declare props: RectProps;
 
-  constructor(fill: string, size: Size) {
+  constructor(size: Size, fill: string = '#000000') {
     super(TIMELINE_ELEMENT_TYPE.RECT);
     this.props = {
       width: size.width,
@@ -19,7 +19,7 @@ export class RectElement extends TrackElement {
   }
 
   getFill(): string {
-    return this.props.fill;
+    return this.props.fill || '#000000';
   }
 
   setFill(fill: string) {
@@ -32,11 +32,11 @@ export class RectElement extends TrackElement {
   }
 
   getCornerRadius(): number {
-    return this.props.radius;
+    return this.props.radius || 0;
   }
 
   getStrokeColor(): string {
-    return this.props.strokeColor || this.props.fill;
+    return this.props.strokeColor || this.props.fill || '#000000';
   }
 
   getLineWidth(): number {

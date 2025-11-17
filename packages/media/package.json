@@ -1,0 +1,33 @@
+{
+  "name": "@helix/media",
+  "version": "0.0.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "license": "SEE LICENSE IN LICENSE.md",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "vite build && tsc --emitDeclarationOnly --outDir dist --declarationDir dist",
+    "dev": "vite build --watch",
+    "check": "biome check src/",
+    "check:fix": "biome check --write src/",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "clean": "rm -rf .turbo node_modules dist"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "~5.9.3",
+    "vite": "^6.4.1",
+    "vite-plugin-dts": "^4.4.2",
+    "vitest": "^2.1.9"
+  }
+}

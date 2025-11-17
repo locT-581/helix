@@ -5,6 +5,9 @@
  * Mobile-optimized, zero dependencies.
  */
 
+// Export types
+export type * from './export';
+
 /**
  * Base dimension interface for video/canvas sizing
  */

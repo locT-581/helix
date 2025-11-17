@@ -7,6 +7,8 @@
  * - Playhead: Current time indicator
  * - TimelineTrack: Individual track
  * - TimelineElement: Draggable/resizable element
+ * - ZoomControls: Zoom in/out buttons
+ * - DragGuides: Visual guides during dragging
  * 
  * @module timeline
  */
@@ -25,3 +27,9 @@ export type { TimelineTrackProps } from './TimelineTrack';
 
 export { TimelineElement } from './TimelineElement';
 export type { TimelineElementProps } from './TimelineElement';
+
+export { ZoomControls } from './ZoomControls';
+export type { ZoomControlsProps } from './ZoomControls';
+
+export { DragGuides } from './DragGuides';
+export type { DragGuidesProps } from './DragGuides';

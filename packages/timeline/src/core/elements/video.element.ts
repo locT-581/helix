@@ -86,9 +86,9 @@ export class VideoElement extends TrackElement {
 
     if (updateFrame) {
       const baseSize = getObjectFitSize(
-        "contain",
         { width: meta.width, height: meta.height },
-        this.parentSize
+        this.parentSize,
+        "contain"
       );
       this.frame = {
         ...this.frame,

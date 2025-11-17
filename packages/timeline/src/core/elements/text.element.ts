@@ -22,7 +22,7 @@ export class TextElement extends TrackElement {
   }
 
   getText(): string {
-    return this.props.text;
+    return this.props.text || '';
   }
 
   getStrokeColor() {
@@ -33,7 +33,7 @@ export class TextElement extends TrackElement {
     return this.props.lineWidth;
   }
 
-  getProps(): TextProps {
+  override getProps(): TextProps {
     return this.props;
   }
 
@@ -47,7 +47,7 @@ export class TextElement extends TrackElement {
     return this;
   }
 
-  setRotation(rotation: number) {
+  override setRotation(rotation: number) {
     this.props.rotation = rotation;
     return this;
   }
@@ -92,12 +92,12 @@ export class TextElement extends TrackElement {
     return this;
   }
 
-  setProps(props: TextProps) {
+  override setProps(props: TextProps) {
     this.props = structuredClone(props);
     return this;
   }
 
-  accept<T>(visitor: ElementVisitor<T>): T {
+  override accept<T>(visitor: ElementVisitor<T>): T {
     return visitor.visitTextElement(this);
   }
 }

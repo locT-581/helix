@@ -14,70 +14,80 @@ import { ElementTextEffect } from "../addOns/text-effect";
 
 export class ElementDeserializer {
   private static deserializeBaseElement(element: TrackElement, json: ElementJSON): void {
+    const jsonAny = json as any;
     if (json.id) element.setId(json.id);
-    if (json.trackId) element.setTrackId(json.trackId);
+    if (jsonAny.trackId) element.setTrackId(jsonAny.trackId || '');
     if (json.s !== undefined) element.setStart(json.s);
     if (json.e !== undefined) element.setEnd(json.e);
-    if (json.props) element.setProps(json.props);
-    if (json.animation) element.setAnimation(ElementAnimation.fromJSON(json.animation));
+    if (jsonAny.props) element.setProps(jsonAny.props);
+    if (jsonAny.animation) element.setAnimation(ElementAnimation.fromJSON(jsonAny.animation));
   }
 
   static deserializeVideoElement(json: ElementJSON): VideoElement {
-    const parentSize = json.frame && json.frame.size 
-      ? { width: json.frame.size[0], height: json.frame.size[1] } 
+    const jsonAny = json as any;
+    const props = jsonAny.props || {};
+    const parentSize = jsonAny.frame && jsonAny.frame.size 
+      ? { width: jsonAny.frame.size[0], height: jsonAny.frame.size[1] } 
       : { width: 0, height: 0 };
     
-    const videoElement = new VideoElement(json.props?.src || "", parentSize);
+    const videoElement = new VideoElement(props.src || "", parentSize);
     ElementDeserializer.deserializeBaseElement(videoElement, json);
     
-    if (json.mediaDuration !== undefined) videoElement.setMediaDuration(json.mediaDuration);
-    if (json.objectFit) videoElement.setObjectFit(json.objectFit);
-    if (json.frame) videoElement.setFrame(json.frame);
-    if (json.frameEffects) videoElement.setFrameEffects(json.frameEffects.map((frameEffect: any) => ElementFrameEffect.fromJSON(frameEffect)));
-    if (json.backgroundColor) videoElement.setBackgroundColor(json.backgroundColor);
+    if (jsonAny.mediaDuration !== undefined) videoElement.setMediaDuration(jsonAny.mediaDuration || 0);
+    if (jsonAny.objectFit) videoElement.setObjectFit(jsonAny.objectFit);
+    if (jsonAny.frame) videoElement.setFrame(jsonAny.frame);
+    if (jsonAny.frameEffects) videoElement.setFrameEffects(jsonAny.frameEffects.map((frameEffect: any) => ElementFrameEffect.fromJSON(frameEffect)));
+    if (jsonAny.backgroundColor) videoElement.setBackgroundColor(jsonAny.backgroundColor);
     
     return videoElement;
   }
 
   static deserializeAudioElement(json: ElementJSON): AudioElement {
-    const audioElement = new AudioElement(json.props?.src || "");
+    const jsonAny = json as any;
+    const props = jsonAny.props || {};
+    const audioElement = new AudioElement(props.src || "");
     ElementDeserializer.deserializeBaseElement(audioElement, json);
     
-    if (json.mediaDuration !== undefined) audioElement.setMediaDuration(json.mediaDuration);
+    if (jsonAny.mediaDuration !== undefined) audioElement.setMediaDuration(jsonAny.mediaDuration || 0);
     
     return audioElement;
   }
 
   static deserializeImageElement(json: ElementJSON): ImageElement {
-    const parentSize = json.frame && json.frame.size 
-      ? { width: json.frame.size[0], height: json.frame.size[1] } 
+    const jsonAny = json as any;
+    const props = jsonAny.props || {};
+    const parentSize = jsonAny.frame && jsonAny.frame.size 
+      ? { width: jsonAny.frame.size[0], height: jsonAny.frame.size[1] } 
       : { width: 0, height: 0 };
     
-    const imageElement = new ImageElement(json.props?.src || "", parentSize);
+    const imageElement = new ImageElement(props.src || "", parentSize);
     ElementDeserializer.deserializeBaseElement(imageElement, json);
     
-    if (json.objectFit) imageElement.setObjectFit(json.objectFit);
-    if (json.frame) imageElement.setFrame(json.frame);
-    if (json.frameEffects) imageElement.setFrameEffects(json.frameEffects.map((frameEffect: any) => ElementFrameEffect.fromJSON(frameEffect)));
-    if (json.backgroundColor) imageElement.setBackgroundColor(json.backgroundColor);
+    if (jsonAny.objectFit) imageElement.setObjectFit(jsonAny.objectFit);
+    if (jsonAny.frame) imageElement.setFrame(jsonAny.frame);
+    if (jsonAny.frameEffects) imageElement.setFrameEffects(jsonAny.frameEffects.map((frameEffect: any) => ElementFrameEffect.fromJSON(frameEffect)));
+    if (jsonAny.backgroundColor) imageElement.setBackgroundColor(jsonAny.backgroundColor);
     
     return imageElement;
   }
 
   static deserializeTextElement(json: ElementJSON): TextElement {
-    const textElement = new TextElement(json.props?.text || "");
+    const props = json.props as any;
+    const textElement = new TextElement(props?.text || "");
     ElementDeserializer.deserializeBaseElement(textElement, json);
     
-    if (json.textEffect) textElement.setTextEffect(ElementTextEffect.fromJSON(json.textEffect));
+    const jsonAny = json as any;
+    if (jsonAny.textEffect) textElement.setTextEffect(ElementTextEffect.fromJSON(jsonAny.textEffect));
     
     return textElement;
   }
 
   static deserializeCaptionElement(json: ElementJSON): CaptionElement {
+    const jsonAny = json as any;
     const captionElement = new CaptionElement(
-      json.t || "",
-      json.s || 0,
-      json.e || 0
+      jsonAny.t || "",
+      jsonAny.s || 0,
+      jsonAny.e || 0
     );
     ElementDeserializer.deserializeBaseElement(captionElement, json);
     
@@ -85,12 +95,13 @@ export class ElementDeserializer {
   }
 
   static deserializeIconElement(json: ElementJSON): IconElement {
-    const size = json.props?.size ?? { width: 100, height: 100 };
+    const props = json.props as any;
+    const size = props?.size ?? { width: 100, height: 100 };
     
     const iconElement = new IconElement(
-      json.props?.src || "",
+      props?.src || "",
       size,
-      json.props?.fill
+      props?.fill
     );
     ElementDeserializer.deserializeBaseElement(iconElement, json);
     
@@ -98,9 +109,10 @@ export class ElementDeserializer {
   }
 
   static deserializeCircleElement(json: ElementJSON): CircleElement {
+    const props = json.props as any;
     const circleElement = new CircleElement(
-      json.props?.fill || "",
-      json.props?.radius || 0
+      props?.fill,
+      props?.radius || 50
     );
     ElementDeserializer.deserializeBaseElement(circleElement, json);
     
@@ -109,11 +121,11 @@ export class ElementDeserializer {
 
   static deserializeRectElement(json: ElementJSON): RectElement {
     const rectElement = new RectElement(
-      json.props?.fill || "",
       { 
-        width: json.props?.width || 0, 
-        height: json.props?.height || 0 
-      }
+        width: (json.props as { width?: number })?.width || 0, 
+        height: (json.props as { height?: number })?.height || 0 
+      },
+      (json.props as { fill?: string })?.fill || '#000000'
     );
     ElementDeserializer.deserializeBaseElement(rectElement, json);
     

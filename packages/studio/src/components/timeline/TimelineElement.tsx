@@ -48,8 +48,8 @@ const ElementContainer = styled('div', {
   borderRadius: '$sm',
   overflow: 'hidden',
   cursor: 'grab',
-  transition: 'all 0.15s ease',
   userSelect: 'none',
+  touchAction: 'none',
   
   '&:active': {
     cursor: 'grabbing',
@@ -89,6 +89,18 @@ const ElementContainer = styled('div', {
         opacity: 0.8,
         cursor: 'grabbing',
         zIndex: 20,
+        transition: 'none', // No transition during drag
+      },
+      false: {
+        transition: 'all 0.15s ease', // Smooth transition when not dragging
+      },
+    },
+    resizing: {
+      true: {
+        transition: 'none', // No transition during resize
+      },
+      false: {
+        transition: 'all 0.15s ease',
       },
     },
   },
@@ -136,6 +148,7 @@ const ResizeHandle = styled('div', {
   justifyContent: 'center',
   cursor: 'ew-resize',
   zIndex: 5,
+  touchAction: 'none',
   
   '&::before': {
     content: '',
@@ -195,6 +208,10 @@ export const TimelineElement = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [isResizing, setIsResizing] = useState<'left' | 'right' | null>(null);
+  
+  // Local state for optimistic UI updates (visual feedback)
+  const [dragOffset, setDragOffset] = useState(0);
+  const [resizeOffset, setResizeOffset] = useState({ left: 0, right: 0 });
 
   /**
    * Get element properties
@@ -216,10 +233,14 @@ export const TimelineElement = ({
   const duration = endTime - startTime;
 
   /**
-   * Calculate element position and size
+   * Calculate element position and size with visual offsets
    */
-  const left = startTime * pixelsPerSecond;
-  const width = duration * pixelsPerSecond;
+  const baseLeft = startTime * pixelsPerSecond;
+  const baseWidth = duration * pixelsPerSecond;
+  
+  // Apply visual offsets for smooth drag/resize feedback
+  const left = baseLeft + dragOffset + resizeOffset.left;
+  const width = baseWidth - resizeOffset.left + resizeOffset.right;
 
   /**
    * Handle main element drag (move)
@@ -231,6 +252,7 @@ export const TimelineElement = ({
 
         if (first) {
           setIsDragging(true);
+          setDragOffset(0); // Reset offset
           
           // Haptic feedback
           if ('vibrate' in navigator) {
@@ -238,12 +260,20 @@ export const TimelineElement = ({
           }
         }
 
+        // Update visual offset for realtime feedback
+        if (!last) {
+          setDragOffset(mx);
+        }
+
         if (last) {
           setIsDragging(false);
           
-          // Calculate new start time
-          const newStart = Math.max(0, (left + mx) / pixelsPerSecond);
+          // Calculate final position and call callback FIRST
+          const newStart = Math.max(0, (baseLeft + mx) / pixelsPerSecond);
           onMove?.(elementId, newStart);
+          
+          // Reset offset AFTER to match new state
+          setDragOffset(0);
         }
       },
     },
@@ -252,6 +282,7 @@ export const TimelineElement = ({
         axis: 'x',
         filterTaps: true,
       },
+      eventOptions: { passive: false },
     }
   );
 
@@ -263,23 +294,32 @@ export const TimelineElement = ({
       onDrag: ({ movement: [mx], first, last }) => {
         if (first) {
           setIsResizing('left');
+          setResizeOffset({ left: 0, right: 0 }); // Reset offset
           
           if ('vibrate' in navigator) {
             navigator.vibrate(10);
           }
         }
 
+        // Update visual offset for realtime feedback
+        if (!last) {
+          setResizeOffset({ left: mx, right: 0 });
+        }
+
         if (last) {
           setIsResizing(null);
           
-          // Calculate new start time (end stays the same)
-          const newStart = Math.max(0, (left + mx) / pixelsPerSecond);
+          // Calculate final position and call callback FIRST
+          const newStart = Math.max(0, (baseLeft + mx) / pixelsPerSecond);
           const newEnd = endTime;
           
           // Ensure minimum duration (0.1s)
           if (newEnd - newStart >= 0.1) {
             onResize?.(elementId, newStart, newEnd);
           }
+          
+          // Reset offset AFTER to match new state
+          setResizeOffset({ left: 0, right: 0 });
         }
       },
     },
@@ -288,6 +328,7 @@ export const TimelineElement = ({
         axis: 'x',
         filterTaps: true,
       },
+      eventOptions: { passive: false },
     }
   );
 
@@ -299,20 +340,29 @@ export const TimelineElement = ({
       onDrag: ({ movement: [mx], first, last }) => {
         if (first) {
           setIsResizing('right');
+          setResizeOffset({ left: 0, right: 0 }); // Reset offset
           
           if ('vibrate' in navigator) {
             navigator.vibrate(10);
           }
         }
 
+        // Update visual offset for realtime feedback
+        if (!last) {
+          setResizeOffset({ left: 0, right: mx });
+        }
+
         if (last) {
           setIsResizing(null);
           
-          // Calculate new end time (start stays the same)
+          // Calculate final position and call callback FIRST
           const newStart = startTime;
-          const newEnd = Math.max(newStart + 0.1, ((left + width) + mx) / pixelsPerSecond);
+          const newEnd = Math.max(newStart + 0.1, ((baseLeft + baseWidth) + mx) / pixelsPerSecond);
           
           onResize?.(elementId, newStart, newEnd);
+          
+          // Reset offset AFTER to match new state
+          setResizeOffset({ left: 0, right: 0 });
         }
       },
     },
@@ -321,6 +371,7 @@ export const TimelineElement = ({
         axis: 'x',
         filterTaps: true,
       },
+      eventOptions: { passive: false },
     }
   );
 

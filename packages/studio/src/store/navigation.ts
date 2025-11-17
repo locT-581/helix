@@ -8,7 +8,7 @@ import { persist } from 'zustand/middleware';
  * Persists navigation state to localStorage for deep linking support.
  */
 
-export type NavigationTab = 'editor' | 'timeline' | 'elements' | 'settings';
+export type NavigationTab = 'editor' | 'timeline' | 'elements' | 'text' | 'settings' | 'export';
 
 export interface NavigationState {
   /** Current active tab */

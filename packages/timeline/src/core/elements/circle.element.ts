@@ -18,7 +18,7 @@ export class CircleElement extends TrackElement {
   }
 
   getFill(): string {
-    return this.props.fill;
+    return this.props.fill || '#000000';
   }
 
   getRadius(): number {
@@ -26,7 +26,7 @@ export class CircleElement extends TrackElement {
   }
 
   getStrokeColor(): string {
-    return this.props.strokeColor || this.props.fill;
+    return this.props.strokeColor || this.props.fill || '#000000';
   }
 
   getLineWidth(): number {

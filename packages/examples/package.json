@@ -11,9 +11,14 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@helix/audio": "workspace:*",
+    "@helix/canvas": "workspace:*",
     "@helix/core": "workspace:*",
+    "@helix/media": "workspace:*",
     "@helix/studio": "workspace:*",
+    "@helix/timeline": "workspace:*",
     "@helix/ui": "workspace:*",
+    "konva": "^9.3.18",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

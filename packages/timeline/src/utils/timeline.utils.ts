@@ -1,7 +1,6 @@
 import { TrackElement } from "../core/elements/base.element";
-import { VideoElement } from "../core/elements/video.element";
 import { Track } from "../core/track/track";
-import { TrackJSON } from "../types";
+import type { TrackJSON, ElementJSON } from "../types";
 
 /**
  * Rounds a number to a specified decimal precision.
@@ -41,7 +40,7 @@ export const getTotalDuration = (tracks: TrackJSON[]) => {
       Math.max(
         maxDuration,
         (timeline?.elements || []).reduce(
-          (timelineDuration, element) => Math.max(timelineDuration, element.e),
+          (timelineDuration, element: ElementJSON) => Math.max(timelineDuration, (element as { e: number }).e),
           0
         )
       ),
@@ -93,7 +92,7 @@ export const getCurrentElements = (
   if (tracks?.length) {
     for (let i = 0; i < tracks.length; i++) {
       if (tracks[i]) {
-        const elements = tracks[i].getElements();
+        const elements = tracks[i]?.getElements() ?? [];
         for (let j = 0; j < elements.length; j++) {
           const element = elements[j];
           if (

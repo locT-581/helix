@@ -1,5 +1,5 @@
 import { styled } from '@helix/ui';
-import { Film, Clock, Image, Settings } from 'lucide-react';
+import { Film, Clock, Image, Type, Settings, Download } from 'lucide-react';
 import { useNavigationStore, type NavigationTab } from '@helix/studio';
 
 const NavContainer = styled('div', {
@@ -41,6 +41,8 @@ const tabs: { id: NavigationTab; label: string; icon: typeof Film }[] = [
   { id: 'editor', label: 'Editor', icon: Film },
   { id: 'timeline', label: 'Timeline', icon: Clock },
   { id: 'elements', label: 'Elements', icon: Image },
+  { id: 'text', label: 'Text', icon: Type },
+  { id: 'export', label: 'Export', icon: Download },
   { id: 'settings', label: 'Settings', icon: Settings },
 ];
 

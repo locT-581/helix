@@ -13,7 +13,7 @@
 import { styled } from '@helix/ui';
 import { motion } from 'framer-motion';
 import { useGesture } from '@use-gesture/react';
-import { useRef, type CSSProperties } from 'react';
+import { useRef, useState, type CSSProperties } from 'react';
 import { TOUCH_TARGET } from '@helix/core';
 
 /**
@@ -78,6 +78,7 @@ const PlayheadHandle = styled('div', {
   justifyContent: 'center',
   cursor: 'grab',
   pointerEvents: 'auto',
+  touchAction: 'none',
   
   '&::before': {
     content: '',
@@ -132,12 +133,14 @@ export const Playhead = ({
   draggable = true,
 }: PlayheadLineProps): JSX.Element => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const isDraggingRef = useRef(false);
+  const [isDragging, setIsDragging] = useState(false); // Use state instead of ref
+  const [dragOffset, setDragOffset] = useState(0); // Visual offset during drag
 
   /**
    * Calculate playhead position (left offset)
    */
-  const left = currentTime * pixelsPerSecond;
+  const baseLeft = currentTime * pixelsPerSecond;
+  const left = baseLeft + dragOffset; // Apply visual offset
 
   /**
    * Handle drag gesture for seeking
@@ -148,7 +151,8 @@ export const Playhead = ({
         if (!draggable || !onSeek) return;
 
         if (first) {
-          isDraggingRef.current = true;
+          setIsDragging(true);
+          setDragOffset(0); // Initialize offset immediately
           
           // Haptic feedback on touch devices
           if ('vibrate' in navigator) {
@@ -156,12 +160,20 @@ export const Playhead = ({
           }
         }
 
-        // Calculate new time based on drag offset
-        const newTime = Math.max(0, (left + mx) / pixelsPerSecond);
-        onSeek(newTime);
+        // Update visual offset continuously (including first event when mx becomes non-zero)
+        setDragOffset(mx);
 
         if (last) {
-          isDraggingRef.current = false;
+          setIsDragging(false);
+          
+          // Calculate final time based on current offset
+          const newTime = Math.max(0, (baseLeft + mx) / pixelsPerSecond);
+          
+          // Reset offset BEFORE callback to avoid double-apply when parent updates
+          setDragOffset(0);
+          
+          // Call callback after reset
+          onSeek(newTime);
         }
       },
     },
@@ -170,31 +182,26 @@ export const Playhead = ({
         axis: 'x',
         filterTaps: true,
       },
+      eventOptions: { passive: false },
     }
   );
-
-  const handleStyle: CSSProperties = {
-    left,
-  };
 
   return (
     <PlayheadContainer
       ref={containerRef}
       style={{ height, left }}
       initial={false}
-      animate={{ left }}
+      animate={isDragging ? {} : { left }} // Disable animation during drag
       transition={{
-        type: 'spring',
-        stiffness: 300,
-        damping: 30,
+        type: 'tween',
+        duration: 0, // Instant update, no delay
       }}
     >
       <PlayheadLine />
       {draggable && (
         <PlayheadHandle
           {...bind()}
-          dragging={isDraggingRef.current}
-          style={handleStyle}
+          dragging={isDragging}
         />
       )}
     </PlayheadContainer>

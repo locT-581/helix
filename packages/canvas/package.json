@@ -1,0 +1,54 @@
+{
+  "name": "@helix/canvas",
+  "version": "0.0.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "sideEffects": false,
+  "license": "SEE LICENSE IN LICENSE.md",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "vite build && tsc --emitDeclarationOnly --outDir dist --declarationDir dist || true",
+    "dev": "vite build --watch",
+    "check": "biome check src/",
+    "check:fix": "biome check --write src/",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "clean": "rm -rf .turbo node_modules dist"
+  },
+  "dependencies": {
+    "@helix/core": "workspace:*",
+    "@helix/media": "workspace:*",
+    "@use-gesture/react": "^10.3.1",
+    "konva": "^9.3.18",
+    "react": "^19.0.0",
+    "react-konva": "^18.2.10"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@types/react": "^19.0.6",
+    "@types/react-dom": "^19.0.2",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "~5.9.3",
+    "vite": "^6.4.1",
+    "vite-plugin-dts": "^4.4.2",
+    "vitest": "^2.1.9"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}

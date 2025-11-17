@@ -10,6 +10,11 @@ import { styled, globalCss } from '@helix/ui';
 import { TopBar } from './components/TopBar';
 import { BottomNav } from './components/BottomNav';
 import { PropertiesPanel } from './components/PropertiesPanel';
+import { TimelineDemo } from './components/TimelineDemo';
+import { CanvasDemo } from './components/CanvasDemo';
+import { AudioDemo } from './components/AudioDemo';
+import { TextDemo } from './components/TextDemo';
+import { ExportDemo } from './components/ExportDemo';
 
 // Apply global Stitches styles
 const globalStyles = globalCss({
@@ -29,17 +34,6 @@ const PreviewContainer = styled('div', {
   flex: 1,
   backgroundColor: '$background',
   position: 'relative',
-});
-
-const TimelinePlaceholder = styled('div', {
-  height: '$32', // 128px
-  backgroundColor: '$surface',
-  borderTop: '1px solid $border',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  color: '$textSecondary',
-  fontSize: '$sm',
 });
 
 export const App = () => {
@@ -73,28 +67,28 @@ export const App = () => {
                 showControls
               />
             </PreviewContainer>
-            <TimelinePlaceholder>
-              Timeline (Week 5-6)
-            </TimelinePlaceholder>
+            <TimelineDemo />
           </>
         )}
         
         {currentTab === 'timeline' && (
-          <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <p>Timeline View (Week 5-6)</p>
-          </div>
+          <TimelineDemo />
         )}
         
         {currentTab === 'elements' && (
-          <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <p>Elements Library (Week 7-8)</p>
-          </div>
+          <CanvasDemo />
+        )}
+        
+        {currentTab === 'text' && (
+          <TextDemo />
+        )}
+        
+        {currentTab === 'export' && (
+          <ExportDemo />
         )}
         
         {currentTab === 'settings' && (
-          <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <p>Settings (Week 9-10)</p>
-          </div>
+          <AudioDemo />
         )}
       </EditorContent>
       
